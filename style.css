@@ -8,9 +8,8 @@ html, body {
     background-color: #1e1e1e; 
     color: #d4d4d4;
 
-    /* --- AJUSTE CLAVE AQUÍ --- */
-    display: flex;             /* 1. Hacemos el body un contenedor flex */
-    flex-direction: column;    /* 2. Apilamos sus hijos (controls y paneles) verticalmente */
+    display: flex;             /* Hacemos el body un contenedor flex */
+    flex-direction: column;    /* Apilamos sus hijos (controls y paneles) verticalmente */
 }
 
 /* Controles */

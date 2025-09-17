@@ -18,12 +18,35 @@ require(['vs/editor/editor.main'], function() {
 });
 
 /* Referencia de elementos de la interfaz */
-const runButton = document.getElementById('run-button');           /* Botón de ejecutar */
 const languageSelect = document.getElementById('language-select'); /* Selector de lenguaje */
 const terminalOutput = document.getElementById('terminal-output'); /* Área de salida de la terminal */
+const runButton = document.getElementById('run-button');           /* Botón "Run" */
 
 /* Evento seleccionar lenguaje */
 languageSelect.addEventListener('change', () => {
     const code = window.editor.getValue();
     terminalOutput.innerText = `Lenguaje cambiado a ${languageSelect.value}\n\n`; /* Mostrar lenguaje actual en terminal */
+});
+
+/* Evento botón "Run" */
+runButton.addEventListener('click', async () => {
+    const code = window.editor.getValue();
+    const language = languageSelect.value;
+
+    terminalOutput.innerText = `Enviando código en ${language}:\n${code}`; /* Mensaje de ejecución */
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/execute/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ language: language, code: code })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la respuesta del servidor: ${response.statusText}`);
+        }
+    } catch (error) {
+        terminalOutput.innerText += `\nError: ${error.message}`;
+        console.error('Error al enviar el código:', error);
+    }
 });
