@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IDE WEB</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="controls">
+            <label for="language-select">Lenguaje:</label>
+            <select id="language-select">
+                <option value="python">Python (PY)</option>
+                <option value="java">Java (JV)</option>
+            </select>
+            <button id="run-button">Ejecutar</button>
+        </div>
+
+        <div class="main-content-panels">
+            <div id="editor-container"></div>
+            
+            <div id="terminal-container">
+                <pre id="terminal-output"></pre>
+            </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.49.0/min/vs/loader.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

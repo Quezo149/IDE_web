@@ -1,0 +1,69 @@
+/* Reseteo básico */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; 
+    font-family: sans-serif;
+    background-color: #1e1e1e; 
+    color: #d4d4d4;
+
+    /* --- AJUSTE CLAVE AQUÍ --- */
+    display: flex;             /* 1. Hacemos el body un contenedor flex */
+    flex-direction: column;    /* 2. Apilamos sus hijos (controls y paneles) verticalmente */
+}
+
+/* Controles */
+.controls {
+    flex-shrink: 0; /* Evita que la barra de controles se encoja */
+    padding: 10px;
+    background-color: #252526; /* Un color más integrado con el tema oscuro */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #444;
+}
+
+.controls select, .controls button {
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #666;
+    background-color: #3c3c3c;
+    color: #f0f0f0;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background-color: #5a5a5a;
+}
+
+/* Contenedor principal de editor y terminal */
+.main-content-panels {
+    flex-grow: 1;  /* Hacemos que este contenedor CREZCA para llenar el espacio vertical restante */
+    display: flex;
+    width: 100%;
+    overflow: hidden; 
+}
+
+/* Editor Container */
+#editor-container {
+    flex: 60%;
+}
+
+/* Terminal Container */
+#terminal-container {
+    flex: 40%;
+    background-color: #181818; /* Color de terminal */
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    color: #d4d4d4;
+    font-family: 'Consolas', 'Monaco', monospace;
+    border-left: 1px solid #444; /* Borde más sutil */
+}
+
+#terminal-output {
+    margin: 0;
+    white-space: pre-wrap; 
+    word-break: break-word;
+}
