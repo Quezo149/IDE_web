@@ -7,7 +7,7 @@ require(['vs/editor/editor.main'], function() {
         value: "print('Hello, World!')",    /* Valor inicial del editor */
         language: 'python',                 /* Lenguaje del editor por defecto */
         theme: 'vs-dark',                   /* Tema del editor */
-        automaticLayout: true                /* Ajuste automático del layout */
+        automaticLayout: true               /* Ajuste automático del layout */
     });
     console.log("Monaco Editor cargado correctamente");
 
@@ -32,8 +32,14 @@ languageSelect.addEventListener('change', () => {
 runButton.addEventListener('click', async () => {
     const code = window.editor.getValue();
     const language = languageSelect.value;
+    const terminalContainer = document.getElementById('terminal-container');
 
-    terminalOutput.innerText = `Enviando código en ${language}:\n${code}`; /* Mensaje de ejecución */
+    const loadingMessage = document.createElement('div');
+    loadingMessage.className = 'terminal-line output-succes'
+    loadingMessage.innerText = 'Ejecutando...';
+    terminalContainer.appendChild(loadingMessage);
+
+    terminalContainer.scrollTop = terminalContainer.scrollHeight; /* Desplazamiento automático hacia abajo */
 
     try {
         const response = await fetch('http://127.0.0.1:8000/api/execute/', {
@@ -45,8 +51,32 @@ runButton.addEventListener('click', async () => {
         if (!response.ok) {
             throw new Error(`Error en la respuesta del servidor: ${response.statusText}`);
         }
+
+        loadingMessage.remove(); /* Elimina el mensaje de "Ejecutando..." */
+
+        const data = await response.json();
+
+        const outLine = document.createElement('pre');
+        outLine.className = 'terminal-line';
+
+        if (data.error) {
+            outLine.classList.add('output-error');
+            outLine.innerText = `Error del servidor: ${data.error}`;
+        } else {
+            outLine.classList.add('output-success');
+            outLine.innerText = `Salida:\n${data.output}`;
+        }
+
+        terminalOutput.appendChild(outLine);
+
     } catch (error) {
-        terminalOutput.innerText += `\nError: ${error.message}`;
+        loadingMessage.remove(); /* Elimina el mensaje de "Ejecutando..." en caso de error */
+        const errorLine = document.createElement('pre');
+        errorLine.className = 'terminal-line output-error';
+        errorLine.innerText = `Error: ${error.message}`;
         console.error('Error al enviar el código:', error);
+        terminalContainer.appendChild(errorLine);
     }
+
+    terminalContainer.scrollTop = terminalContainer.scrollHeight; /* Desplazamiento automático hacia abajo */
 });

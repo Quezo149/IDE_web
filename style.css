@@ -66,3 +66,16 @@ html, body {
     white-space: pre-wrap; 
     word-break: break-word;
 }
+
+.output-error {
+    color: #ff6c6b; /* Color rojo para errores */
+}
+
+.output-success {
+    color: #d4d4d4; /* Color de texto normal */
+}
+
+.terminal-line {
+    display: block;
+    margin-bottom: 5px; /* Espaciado entre líneas de terminal */
+}
